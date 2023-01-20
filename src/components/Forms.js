@@ -1,27 +1,28 @@
-import { useFormik } from "formik";
+import { Formik ,Form ,Field} from "formik";
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { formValidation } from "../schemas";
-const initialValues = {
-  fname: "",
-  lname: "",
-  companyN: "",
-  email: "",
-  address: "",
-  month: "",
-  date: "",
-  year: "",
-  confirmPassword:"",
-  password:"",
-};
+
+// const initialValues = {
+//   fname: "",
+//   lname: "",
+//   companyN: "",
+//   email: "",
+//   address: "",
+//   month: "",
+//   date: "",
+//   year: "",
+//   confirmPassword:"",
+//   password:"",
+// };
 const Forms = () => {
-  const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: initialValues,
-    validationSchema:formValidation,
-    onSubmit: (values) => {
-      console.log(values, "values");
-    },
-  });
+//   const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
+//     initialValues: initialValues,
+//     validationSchema:formValidation,
+//     onSubmit: (values) => {
+//       console.log(values, "values");
+//     },
+//   });
 
   return (
     <>
@@ -34,40 +35,60 @@ const Forms = () => {
             <Row className="text-center p-2" style={{ background: "" }}>
               <h5 className="p-3" style={{background:"#ebfaf2"}}>Online Registration</h5>
             </Row>
-            <form onSubmit={handleSubmit} className="p-5">
+            <Formik initialValues={{
+       fname: "",
+  lname: "",
+  companyN: "",
+  email: "",
+  address: "",
+  month: "",
+  date: "",
+  year: "",
+  confirmPassword:"",
+  password:"",
+       }}
+       validationSchema={formValidation}
+       onSubmit={values => {
+         // same shape as initial values
+         console.log(values);
+       }}
+     >
+       {({ errors, touched }) => (
+        <Form  className="p-5">
               <Row className="justify-between">
                 <Col>
                   <div>
                     <label htmlFor="fname">First name:</label>
                   </div>
-                  <input
+                  
+                  <Field
                     type="name"
                     id="fname"
                     name="fname"
-                    value={values.fname}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
+                    
+                    
                     placeholder="first name"
-                    autoComplete="off"
+                 
                   />
-                  {<p className="text-danger">{errors.fname}</p>}
+                      {errors.fname && touched.fname ? (
+             <p className="text-danger">{errors.fname}</p>
+           ) : null}
                 </Col>
                 <Col>
                   {" "}
                   <div>
                     <label htmlFor="fname">Last name:</label>
                   </div>
-                  <input
+                  <Field
                     type="name"
                     id="lname"
                     name="lname"
-                    value={values.lname}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
                     placeholder="last name"
-                    autoComplete="off"
+                   
                   />
-                   {<p className="text-danger">{errors.lname}</p>}
+                   {errors.lname && touched.lname ? (
+             <p className="text-danger">{errors.lname}</p>
+           ) : null}
                 </Col>
               </Row>
               <Row className="justify-between">
@@ -75,34 +96,32 @@ const Forms = () => {
                   <div>
                     <label htmlFor="password">password:</label>
                   </div>
-                  <input
+                  <Field
                     type="password"
                     id="password"
                     name="password"
-                    value={values.password}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
                     placeholder="password"
-                    autoComplete="off"
+                 
                   />
-                  {<p className="text-danger">{errors.password}</p>}
+                   {errors.password && touched.password? (
+             <p className="text-danger">{errors.password}</p>
+           ) : null}
                 </Col>
                 <Col>
                   {" "}
                   <div>
                     <label htmlFor="fname">confirm password:</label>
                   </div>
-                  <input
+                  <Field
                     type="password"
                     id="confirm password"
                     name="confirmPassword"
-                    value={values.confirmPassword}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
                     placeholder="confirm password"
-                    autoComplete="off"
+                
                   />
-                   {<p className="text-danger">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && touched.confirmPassword ? (
+             <p className="text-danger">{errors.confirmPassword}</p>
+             ) : null}
                 </Col>
               </Row>
               <Row>
@@ -113,45 +132,42 @@ const Forms = () => {
                   type="text"
                   id="companyN"
                   name="companyN"
-                  value={values.companyN}
-                  onBlur={handleBlur}
-                    onChange={handleChange}
                   placeholder="company name"
-                  autoComplete="off"
+                 
                 />
-                 {<p className="text-danger">{errors.companyN}</p>}
+                   {errors.companyN&& touched.companyN ? (
+             <p className="text-danger">{errors.companyN}</p>
+             ) : null}
               </Row>
               <Row>
                 <div>
                   <label htmlFor="fname">Email:</label>
                 </div>
-                <input
+                <Field
                   type="email"
                   id="email"
                   name="email"
-                  value={values.email}
-                  onBlur={handleBlur}
-                    onChange={handleChange}
                   placeholder="email"
-                  autoComplete="off"
+               
                 />
-                   {<p className="text-danger">{errors.email}</p>}
+                   {errors.email&& touched.email ? (
+             <p className="text-danger">{errors.email}</p>
+             ) : null}
               </Row>
               <Row>
                 <div>
                   <label htmlFor="fname">Physical adderss:</label>
                 </div>
-                <input
+                <Field
                   type="text"
                   id="address"
                   name="address"
-                  value={values.address}
-                  onBlur={handleBlur}
-                    onChange={handleChange}
                   placeholder="adderss"
-                  autoComplete="off"
+                
                 />
-                {<p className="text-danger">{errors.address}</p>}
+                  {errors.address&& touched.address? (
+             <p className="text-danger">{errors.address}</p>
+             ) : null}
               </Row>
               <Row className="justify-between">
               <div>Date of Birth</div>
@@ -159,34 +175,33 @@ const Forms = () => {
                   <div>
                   
                   </div>
-                  <input
+                  <Field
                     type="month"
                     id="month"
                     name="month"
-                    value={values.month}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
                     placeholder="month"
-                    autoComplete="off"
+                    
                   />
-                  {<p className="text-danger">{errors.month}</p>}
+                  {errors.month&& touched.month? (
+             <p className="text-danger">{errors.month}</p>
+             ) : null}
                 </Col>
+               
                 <Col>
                   {" "}
                   <div>
                   
                   </div>
-                  <input
+                  <Field
                     type="date"
                     id="date"
                     name="date"
-                    value={values.date}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
                     placeholder="Day"
-                    autoComplete="off"
+                   
                   />
-                  {<p className="text-danger">{errors.date}</p>}
+                   {errors.date&& touched.date? (
+             <p className="text-danger">{errors.date}</p>
+             ) : null}
                 </Col>
                 <Col>
                   {" "}
@@ -197,13 +212,11 @@ const Forms = () => {
                     type="number"
                     id="number"
                     name="year"
-                    autoComplete="off"
-                    value={values.year}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
                     placeholder={"Year"}
                   />
-                  {<p className="text-danger">{errors.day}</p>}
+                    {errors.year&& touched.year? (
+             <p className="text-danger">{errors.year}</p>
+             ) : null}
                 </Col>
               </Row>
               <div className="p-5">
@@ -212,7 +225,9 @@ const Forms = () => {
                   submit
                 </button>
               </div>
-            </form>
+            </Form>
+       )}
+            </Formik>
           </Container>
         </div>
       </div>
